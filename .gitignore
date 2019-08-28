@@ -13,3 +13,5 @@ index.js
 constants.d.ts
 register.d.ts
 index.d.ts
+components/ThemeSelector.d.ts
+components/PreviewPanel.d.ts
