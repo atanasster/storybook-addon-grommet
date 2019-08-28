@@ -10,7 +10,7 @@ export default {
   external: Object.keys(pkg.peerDependencies || {}),
   output: [
     {
-      file: pkg.main,
+      file: 'dist/index.js',
       format: 'cjs',
     },
   ],

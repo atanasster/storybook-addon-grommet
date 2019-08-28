@@ -6,12 +6,3 @@ npm-debug.log
 package-lock.json
 .rpt2_cache
 .DS_Store
-register.js
-index.js
-register.js
-index.js
-constants.d.ts
-register.d.ts
-index.d.ts
-components/ThemeSelector.d.ts
-components/PreviewPanel.d.ts
