@@ -1,6 +1,6 @@
 # storybook-addon-grommet
 
-A storybook addon to add a theme selector in the toolbar
+A storybook addon to add a grommet theme selector in the toolbar
 
 ## Installation
 ```sh

@@ -5,3 +5,4 @@ dist/**
 npm-debug.log
 package-lock.json
 .rpt2_cache
+.DS_Store
