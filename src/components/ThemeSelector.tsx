@@ -1,0 +1,69 @@
+import React, { FunctionComponent } from 'react';
+import { Channel }  from '@storybook/channels';
+import { normalizeColor } from 'grommet/utils/colors';
+import { base } from 'grommet/themes/base';
+import { WithTooltip, TooltipLinkList, ListItem } from '@storybook/design-system';
+import styled from 'styled-components';
+import { EVENTS } from '../constants';
+
+const ThemeIcon = styled.span`
+  height: 1.2rem;
+  width: 1.2rem;
+  display: block;
+  ${props => props.theme && props.theme.global && `
+    background-color: ${normalizeColor(
+      props.theme.global.colors.brand || base.global.colors.brand,
+      props.theme
+    )};
+    border: ${`2px solid ${normalizeColor(
+      props.theme.global.colors.text || base.global.colors.text,
+      props.theme
+    )}`};
+
+  `}  
+`;
+
+interface ThemeSelectorProps {
+  channel: Channel,
+}
+export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel }) => {
+  const [theme, setTheme] = React.useState<string>();
+  const [themes, setThemes] = React.useState<object>({});
+  const [expanded, setExpanded] = React.useState(false);
+
+  const onInitThemes = ({ theme, themes }) => {
+    setThemes(themes);
+    setTheme(theme);
+  }  
+  React.useEffect(() => {
+    channel.on(EVENTS.INIT, onInitThemes);
+    return () => {
+      channel.removeListener(EVENTS.INIT, onInitThemes);
+    }
+  }, []);
+  return (
+    <WithTooltip
+      placement="top"
+      trigger="click"
+      tooltipShown={expanded}
+      onVisibilityChange={s => setExpanded(s)}
+      tooltip={<TooltipLinkList links={Object.keys(themes)
+        .map(value => ({
+          id: value,
+          title: value,
+          onClick: () => {
+            channel.emit(EVENTS.UPDATE, value);
+            setTheme(value);
+          },
+          right: <ThemeIcon theme={themes[value]} />,
+        }))} />}
+      closeOnClick
+    >
+      <ListItem
+        title=''
+        left={theme ? theme : 'theme...'}
+        right={<ThemeIcon theme={themes[theme]} />}
+      />
+    </WithTooltip>
+  );
+};
