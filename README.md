@@ -4,6 +4,9 @@ A storybook addon to add a grommet theme selector in the toolbar
 
 ![Theme selector](./doc/theme-selector.jpg)
 
+## Live demo
+[grommet-controls](https://atanasster.github.io/grommet-controls/?path=/story/controls-pagingtable--main)
+
 ## Installation
 ```sh
 npm i -D storybook-addon-grommet
