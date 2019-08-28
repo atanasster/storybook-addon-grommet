@@ -13,3 +13,12 @@ export const main = () => (
     </Heading>  
   </Box>
 );
+
+export const level1 = () => (
+  <Box basis='medium' align='center' background='brand'>
+    <Heading level={1}>
+      Test grommet
+    </Heading>  
+  </Box>
+);
+

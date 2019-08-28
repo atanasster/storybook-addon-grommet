@@ -2,6 +2,8 @@
 
 A storybook addon to add a grommet theme selector in the toolbar
 
+![Theme selector](./doc/theme-selector.jpg)
+
 ## Installation
 ```sh
 npm i -D storybook-addon-grommet

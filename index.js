@@ -60,6 +60,7 @@ var PreviewPanel = function (_a) {
 
 var withGrommet = function (_a) {
     var theme = _a.theme, themes = _a.themes, boxProps = _a.boxProps, grommetProps = _a.grommetProps;
+    console.log('gggggg');
     return addons.makeDecorator({
         name: 'withGrommet',
         parameterName: 'grommet',

@@ -6,12 +6,13 @@ import { PreviewPanel } from './components/PreviewPanel';
 
 interface withGrommetProps {
   themes: object,
-  theme: string,
-  boxProps: BoxProps,
-  grommetProps: GrommetProps,
+  theme?: string,
+  boxProps?: BoxProps,
+  grommetProps?: GrommetProps,
 }
 
-export const withGrommet = ({ theme, themes, boxProps, grommetProps }: withGrommetProps) => makeDecorator({
+export const withGrommet = ({ theme, themes, boxProps, grommetProps }: withGrommetProps) => {
+  return makeDecorator({
     name: 'withGrommet',
     parameterName: 'grommet',
     wrapper: (getStory: StoryGetter, context: StoryContext) => (
@@ -26,6 +27,7 @@ export const withGrommet = ({ theme, themes, boxProps, grommetProps }: withGromm
       </PreviewPanel>  
     ),
   });
+}
 
 if (module && (module as any).hot && (module as any).hot.decline) {
   (module as any).hot.decline();
