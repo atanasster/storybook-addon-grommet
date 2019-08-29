@@ -3,7 +3,7 @@ import { Grommet, Box, BoxProps, GrommetProps } from 'grommet';
 import { Channel } from '@storybook/channels';
 import { EVENTS } from '../constants';
 
-interface withGrommetProps {
+interface PreviewPanelProps {
   theme: string,
   themes: object,
   boxProps: BoxProps,
@@ -12,7 +12,7 @@ interface withGrommetProps {
   children: React.ReactNode,
 }
 
-export const PreviewPanel = ({ children, themes, theme, channel, boxProps, grommetProps }: withGrommetProps) => {
+export const PreviewPanel = ({ children, themes, theme, channel, boxProps, grommetProps }: PreviewPanelProps) => {
   const [state, setTheme] = React.useState<string>(theme);
   const onSelectTheme = (theme) => {
     setTheme(theme);
