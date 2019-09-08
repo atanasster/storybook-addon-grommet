@@ -1,6 +1,8 @@
 import React from 'react';
-import { Grommet, Box, BoxProps, GrommetProps } from 'grommet';
+import { Consumer } from '@storybook/api';
 import { Channel } from '@storybook/channels';
+import { Grommet, Box, BoxProps, GrommetProps } from 'grommet';
+import { stateMapper } from '../utils/stateMapper';
 import { EVENTS } from '../constants';
 
 interface PreviewPanelProps {
@@ -13,22 +15,18 @@ interface PreviewPanelProps {
 }
 
 export const PreviewPanel = ({ children, themes, theme, channel, boxProps, grommetProps }: PreviewPanelProps) => {
-  const [state, setTheme] = React.useState<string>(theme);
-  const onSelectTheme = (theme) => {
-    setTheme(theme);
-};
   React.useEffect(() => {
-    channel.on(EVENTS.UPDATE, onSelectTheme);
     channel.emit(EVENTS.INIT, { themes, theme });
-    return () => {
-      channel.removeListener(EVENTS.UPDATE, onSelectTheme);
-    }
   }, []);
   return (
-    <Grommet theme={themes[state]} {...grommetProps}>
-      <Box {...boxProps}>
-        {children}
-      </Box>  
-    </Grommet>
+    <Consumer filter={stateMapper}>
+      {({ selected }: ReturnType<typeof stateMapper>) => (
+        <Grommet theme={themes[selected || theme]} {...grommetProps}>
+          <Box {...boxProps}>
+            {children}
+          </Box>  
+        </Grommet>
+      )}
+    </Consumer>    
   );    
 };

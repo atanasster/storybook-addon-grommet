@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from 'react';
+import { Consumer, API } from '@storybook/api';
 import { Channel }  from '@storybook/channels';
 import { normalizeColor } from 'grommet/utils/colors';
 import { base } from 'grommet/themes/base';
 import { WithTooltip, TooltipLinkList, ListItem } from '@storybook/design-system';
 import styled from 'styled-components';
-import { EVENTS } from '../constants';
+import { stateMapper } from '../utils/stateMapper';
+import { EVENTS, PARAM_KEY } from '../constants';
 
 const ThemeIcon = styled.span`
   height: 1.2rem;
@@ -23,17 +25,19 @@ const ThemeIcon = styled.span`
   `}  
 `;
 
+
 interface ThemeSelectorProps {
   channel: Channel,
+  api: API,
 }
-export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel }) => {
-  const [theme, setTheme] = React.useState<string>();
+export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel, api }) => {
+  const [defaultTheme, setDefaultTheme] = React.useState<string | null>(null);
   const [themes, setThemes] = React.useState<object>({});
   const [expanded, setExpanded] = React.useState(false);
 
-  const onInitThemes = ({ theme, themes }) => {
+  const onInitThemes = ({ themes, theme }) => {
     setThemes(themes);
-    setTheme(theme);
+    setDefaultTheme(theme);
   }  
   React.useEffect(() => {
     channel.on(EVENTS.INIT, onInitThemes);
@@ -41,29 +45,37 @@ export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel }
       channel.removeListener(EVENTS.INIT, onInitThemes);
     }
   }, []);
+  
+  const onChange = (selected) => {
+    if (typeof selected === 'string') {
+      api.setAddonState<string>(PARAM_KEY, selected);
+    }
+    api.emit(EVENTS.UPDATE, selected);
+  };
   return (
-    <WithTooltip
-      placement="top"
-      trigger="click"
-      tooltipShown={expanded}
-      onVisibilityChange={s => setExpanded(s)}
-      tooltip={<TooltipLinkList links={Object.keys(themes)
-        .map(value => ({
-          id: value,
-          title: value,
-          onClick: () => {
-            channel.emit(EVENTS.UPDATE, value);
-            setTheme(value);
-          },
-          right: <ThemeIcon theme={themes[value]} />,
-        }))} />}
-      closeOnClick
-    >
-      <ListItem
-        title=''
-        left={theme ? theme : 'theme...'}
-        right={<ThemeIcon theme={themes[theme]} />}
-      />
-    </WithTooltip>
+    <Consumer filter={stateMapper}>
+      {({ selected }: ReturnType<typeof stateMapper>) => (
+        <WithTooltip
+          placement="top"
+          trigger="click"
+          tooltipShown={expanded}
+          onVisibilityChange={s => setExpanded(s)}
+          tooltip={<TooltipLinkList links={Object.keys(themes)
+            .map(value => ({
+              id: value,
+              title: value,
+              onClick: () => onChange(value),
+              right: <ThemeIcon theme={themes[value]} />,
+            }))} />}
+          closeOnClick
+        >
+          <ListItem
+            title=''
+            left={selected ? selected : (defaultTheme || 'theme...')}
+            right={<ThemeIcon theme={themes[selected]} />}
+          />
+        </WithTooltip>
+      )}
+    </Consumer>
   );
 };

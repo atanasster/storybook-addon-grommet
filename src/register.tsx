@@ -11,6 +11,7 @@ addons.register(ADDON_ID, api => {
     render: () => (
       <ThemeSelector
         channel={api.getChannel()}
+        api={api}
       />
     ),
   });
