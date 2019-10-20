@@ -7,17 +7,17 @@ export default {
 };
 
 export const main = () => (
-  <Box basis='medium' align='center' background='accent-1'>
+  <Box basis='medium' align='center' background='accent-2' border={{ side: 'all', size: 'xlarge'}}>
     <Heading>
-      Test grommet
+      accent-2
     </Heading>  
   </Box>
 );
 
 export const level1 = () => (
-  <Box basis='medium' align='center' background='brand'>
+  <Box basis='medium' align='center' background='brand' border={{ side: 'all', size: 'xlarge'}}>
     <Heading level={1}>
-      Test grommet
+      brand
     </Heading>  
   </Box>
 );
