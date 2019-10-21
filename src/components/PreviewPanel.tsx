@@ -14,6 +14,7 @@ interface PreviewPanelProps {
 
 export const PreviewPanel = ({ children, themes, theme, channel, boxProps, grommetProps }: PreviewPanelProps) => {
   const [selected, setSelected] = React.useState<string>(theme);
+ 
   React.useEffect(() => {
     channel.emit(EVENTS.INIT, { themes, theme });
   }, []);

@@ -52,6 +52,9 @@ export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel, 
     api.setQueryParams({theme: selected});
     api.emit(EVENTS.UPDATE, selected);
   };
+  if (!theme || !themes[theme]) {
+    return null;
+  }
   return (
     <WithTooltip
       placement="top"
@@ -69,7 +72,7 @@ export const ThemeSelector: FunctionComponent<ThemeSelectorProps> = ({ channel, 
     >
       <ListItem
         title=''
-        left={theme || 'theme...'}
+        left={theme}
         right={<ThemeIcon theme={themes[theme]} />}
       />
     </WithTooltip>
