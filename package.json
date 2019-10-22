@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-grommet",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "A storybook addon to select grommet themes",
   "keywords": [
     "addon",
@@ -54,6 +54,6 @@
     "styled-components": "^4.3.2"
   },
   "dependencies": {
-    "@storybook/design-system": "^0.0.44"
+    "@storybook/design-system": "^1.1.7"
   }
 }
