@@ -1,4 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 import { withGrommet } from '../dist';
 import { grommet, dark } from 'grommet';
 
@@ -13,5 +13,3 @@ addDecorator(withGrommet({
   },
 }
 ));
-
-configure(require.context('./', true, /\.stories\.js$/), module);
