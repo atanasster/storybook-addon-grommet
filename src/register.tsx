@@ -7,7 +7,7 @@ addons.register(ADDON_ID, api => {
   addons.add(ADDON_ID, {
     title: 'Grommet',
     type: types.TOOL,
-    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs' || viewMode === 'page',
     render: () => (
       <ThemeSelector
         channel={api.getChannel()}
